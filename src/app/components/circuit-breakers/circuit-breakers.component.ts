@@ -11,6 +11,7 @@ import { Breaker } from "../../breaker";
 export class CircuitBreakersComponent implements OnInit {
   disableButtons=false;
   breakers: Array<Breaker>;
+  popTime: Array<number> = [3,4,5,6,7,8,9,10]
 
   constructor(private renderer: Renderer2, private breakerService: BreakersService){
     this.breakers = Breakers.getBreakers();
