@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {BreakersService} from "../../services/breakers/breakers.service";
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { BreakersService } from "../../services/breakers/breakers.service";
+import { Breakers } from '../../breakers';
+import { Breaker } from "../../breaker";
 
 @Component({
   selector: 'app-circuit-breakers',
@@ -7,14 +9,25 @@ import {BreakersService} from "../../services/breakers/breakers.service";
   styleUrls: ['./circuit-breakers.component.less']
 })
 export class CircuitBreakersComponent implements OnInit {
+  disableButtons=false;
+  breakers: Array<Breaker>;
 
-  constructor(private breakerService: BreakersService){}
+  constructor(private renderer: Renderer2, private breakerService: BreakersService){
+    this.breakers = Breakers.getBreakers();
+  }
 
-  popBreaker(address: string, register: string, breakerNumber: string) {
-    this.breakerService.pop({breakerNumber: breakerNumber, address: address, register:   register});
+  popBreaker(e, address: string, register: string, breakerNumber: string) {
+    this.renderer.addClass(e.target, 'popped');
+    this.disableButtons = true
+    this.breakerService.pop({breakerNumber: breakerNumber, address: address, register: register});
+    setTimeout(()=> {
+      this.disableButtons=false;
+      this.renderer.removeClass(e.target, 'popped');
+    }, 4000)
   }
 
   ngOnInit() {
+
   }
 
 }

@@ -10,10 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/popbreaker', function(req, res, next) {
-  console.log(req.body);
   var relayRequest = new RelayRequest(req.body);
-  duino.change(relayRequest, () => {
-    res.status(200).send('Success');
-  });
+  duino.change(relayRequest, () => res.status(200).send('Success'));
 })
 module.exports = router;
