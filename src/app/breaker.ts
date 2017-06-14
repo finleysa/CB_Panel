@@ -1,7 +1,7 @@
 export class Breaker {
   name: string;
   amps: number;
-  address: any;
-  register: any;
-  relay: any;
+  address: string;
+  register: string;
+  relay: string;
 }
