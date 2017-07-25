@@ -1,6 +1,6 @@
 var five = require("johnny-five");
 var board = new five.Board({
-  port: "COM4"
+  port: "COM1"
 });
 
 exports.address = 0x00;
@@ -35,7 +35,7 @@ board.on("ready", function () {
         exports.breakerNumber = 0x00;
         that.io.i2cWrite(exports.address, exports.register, [exports.breakerNumber]);
         waiting = false;
-    }, 4000);
+      }, 4000);
     }
-  })
+  });
 });

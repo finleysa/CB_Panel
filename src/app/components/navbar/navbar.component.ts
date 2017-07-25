@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent implements OnInit {
+  @Output() waitTimeUpdated= new EventEmitter();
+  waitTime: number = 4;
 
-  constructor() { }
+  constructor() {
+    this.waitTimeUpdated.emit(this.waitTime);
+  }
 
   ngOnInit() {
   }
-
 }

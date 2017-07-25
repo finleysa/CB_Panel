@@ -1,6 +1,6 @@
 var five = require("johnny-five");
 var board = new five.Board({
-  port: "COM4"
+  port: "COM1"
 });
 
 exports.address = 0x00;

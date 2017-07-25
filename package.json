@@ -29,7 +29,7 @@
     "jquery": "^3.2.1",
     "morgan": "^1.8.1",
     "rxjs": "^5.1.0",
-    "serialport": "^4.0.7",
+    "serialport": "^5.0.0-beta8",
     "socket.io": "^2.0.1",
     "winston": "^2.3.1",
     "zone.js": "0.8.5"
