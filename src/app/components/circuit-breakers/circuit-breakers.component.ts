@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, Renderer2} from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { BreakersService } from "../../services/breakers/breakers.service";
-import { Breakers } from '../../breakers';
-import { Breaker } from "../../breaker";
+import { Breakers } from '../../models/breakers';
+import { Breaker } from "../../models/breaker";
 
 @Component({
   selector: 'app-circuit-breakers',

@@ -124,7 +124,7 @@ export class Breakers
         relay: '0x01'
       },
       {
-        name: "PRC 152",
+        name: "PRC 117",
         amps: 1,
         address: '0x21',
         register: '0x12',

@@ -5,7 +5,7 @@ exports.connect = () => {
     global.logger = new (winston.Logger)({
       transports: [
         new (winston.transports.Console)(),
-        new (winston.transports.File)({ filename: 'webmap.log' })
+        new (winston.transports.File)({ filename: 'webapp.log' })
       ]
     });
   }
