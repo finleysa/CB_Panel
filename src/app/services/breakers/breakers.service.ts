@@ -4,19 +4,28 @@ import {xhrHeaders} from "../../xhr-headers";
 
 @Injectable()
 export class BreakersService {
-  private url = '/popbreaker';
+  private popBreakerURL = '/popbreaker';
+  private startDuino = '/duinostart';
+  public connected = false;
 
   constructor(private http: Http) {}
 
   pop(data: object) {
     const network$ = this.http
-      .post(this.url,
+      .post(this.popBreakerURL,
         data,
         xhrHeaders());
 
     network$.subscribe(
       res => console.log(res.statusText),
-      err => console.log(err)
+      err => console.error(err)
     );
+  }
+
+  duinoStart(data: object) {
+    return this.http
+      .post(this.startDuino,
+        data,
+        xhrHeaders());
   }
 }

@@ -1,8 +1,8 @@
-<app-navbar></app-navbar>
+<app-navbar (popDurationEvent)="onDurationChange($event)" (duinoConnectedEvent)="onConnectedChange($event)"></app-navbar>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
-      <app-circuit-breakers></app-circuit-breakers>
+      <app-circuit-breakers [popDuration]="duration" [duinoConnected]="duinoConnected"></app-circuit-breakers>
     </div>
   </div>
   <!--<div class="row" style="margin: 20px 10px">-->

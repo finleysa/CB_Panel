@@ -1,8 +1,8 @@
 /// <reference path="../../../../node_modules/@types/socket.io-client/index.d.ts"/>
 
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import * as _ from "lodash";
 import {Selections} from '../../models/selections';
+import {BreakersService} from "../../services/breakers/breakers.service";
 
 @Component({
   selector: 'app-navbar',
@@ -10,14 +10,16 @@ import {Selections} from '../../models/selections';
   styleUrls: ['./navbar.component.less']
 })
 export class NavbarComponent implements OnInit {
-  @Output() waitTimeUpdated= new EventEmitter();
-  waitTime: number;
+  @Output() popDurationEvent = new EventEmitter();
+  @Output() changePortEvent = new EventEmitter();
+  @Output() duinoConnectedEvent = new EventEmitter();
   socket: any;
   ports: any;
   selections = new Selections;
+  connected: boolean = false;
 
-  constructor() {
-    this.waitTimeUpdated.emit(this.waitTime);
+  constructor(private breakerService: BreakersService) {
+    // this.popDurationEvent.emit(this.popDuration);
   }
 
   ngOnInit() {
@@ -25,25 +27,43 @@ export class NavbarComponent implements OnInit {
       this.selections.selectedPort = localStorage.getItem("port");
     }
     if(localStorage.getItem("duration")) {
-      this.selections.selectedDuration = localStorage.getItem("duration");
+      this.selections.selectedDuration = parseInt(localStorage.getItem("duration"));
     }
+
+    this.popDurationEvent.emit(this.selections.selectedDuration);
 
     this.socket = io();
     this.socket.emit('GetSerialPorts');
-    this.socket.on('EmitPorts', (ports) => {
-      this.ports = ports;
-    });
+    this.socket.on('EmitPorts', (ports) => { this.ports = ports; });
+    this.socket.emit('GetDuinoStatus');
+    this.socket.on('DuinoStatus', (connected) => { this.connected = connected.status; this.duinoConnectedEmit(); });
   }
 
   onPortChange(e) {
-    localStorage.setItem("port", e.path[0].value);
-    this.selections.selectedPort = e.path[0].value;
+    let port = e.path[0].value;
+    localStorage.setItem("port", port);
+    this.selections.selectedPort = port;
   }
 
   onDurationChange(e) {
     let duration = e.path[0].value;
     localStorage.setItem("duration", duration);
-    this.selections.selectedDuration = duration;
-    this.waitTimeUpdated.emit(duration);
+    this.popDurationEvent.emit(duration);
+  }
+
+  setPortClick() {
+    let $network = this.breakerService.duinoStart({port: this.selections.selectedPort});
+
+    $network.subscribe(
+      res => {
+        res.ok ? this.connected = true : this.connected = false;
+        this.duinoConnectedEmit();
+      },
+      err => console.error(err)
+    );
+  }
+
+  duinoConnectedEmit() {
+    this.duinoConnectedEvent.emit(this.connected);
   }
 }

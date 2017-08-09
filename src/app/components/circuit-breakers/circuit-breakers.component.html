@@ -1,38 +1,56 @@
 <div *ngIf="breakers" class="container">
   <div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+      <div class="progress">
+        <div class="progress-bar  progress-bar-striped" role="progressbar"
+            attr.aria-valuenow="{{timer.now}}"
+            attr.aria-valuemin="{{timer.min}}"
+            attr.aria-valuemax="{{timer.max}}"
+            style.width="{{timer.width}}"
+            [ngClass]="duinoConnected ? 'progress-bar-info' : 'progress-bar-danger' ">
+          <span class="sr-only">40% Complete (success)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="text-center col-sm-2" *ngFor="let breaker of breakers | slice:0:5; first as isFirst"
          [ngClass]="{'col-sm-offset-1': isFirst}">
       <label class="breaker-label">{{breaker.name}}</label>
-      <button [disabled]="disableButtons"
+      <button [disabled]="disableButtons || !duinoConnected"
               (click)="popBreaker($event, breaker.address, breaker.register, breaker.relay)"
-              class="breaker">{{breaker.amps}}</button>
+              class="breaker"
+              style.border-color="{{duinoConnected ? '#5bc0de' : '#d9534f'}}">{{breaker.amps}}</button>
     </div>
   </div>
   <div class="row">
     <div class="text-center col-sm-2" *ngFor="let breaker of breakers | slice:5:10; first as isFirst"
          [ngClass]="{'col-sm-offset-1': isFirst}">
     <label class="breaker-label">{{breaker.name}}</label>
-      <button [disabled]="disableButtons"
+      <button [disabled]="disableButtons || !duinoConnected"
               (click)="popBreaker($event, breaker.address, breaker.register, breaker.relay)"
-              class="breaker">{{breaker.amps}}</button>
+              class="breaker"
+              style.border-color="{{duinoConnected ? '#5bc0de' : '#d9534f'}}">{{breaker.amps}}</button>
     </div>
   </div>
   <div class="row">
     <div class="text-center col-sm-2" *ngFor="let breaker of breakers | slice:10:15; first as isFirst"
          [ngClass]="{'col-sm-offset-1': isFirst}">
     <label class="breaker-label">{{breaker.name}}</label>
-      <button [disabled]="disableButtons"
+      <button [disabled]="disableButtons || !duinoConnected"
               (click)="popBreaker($event, breaker.address, breaker.register, breaker.relay)"
-              class="breaker">{{breaker.amps}}</button>
+              class="breaker"
+              style.border-color="{{duinoConnected ? '#5bc0de' : '#d9534f'}}">{{breaker.amps}}</button>
     </div>
   </div>
   <div class="row">
     <div class="text-center col-sm-2" *ngFor="let breaker of breakers | slice:15:20; first as isFirst"
          [ngClass]="{'col-sm-offset-1': isFirst}">
     <label class="breaker-label">{{breaker.name}}</label>
-      <button [disabled]="disableButtons"
+      <button [disabled]="disableButtons || !duinoConnected"
               (click)="popBreaker($event, breaker.address, breaker.register, breaker.relay)"
-              class="breaker">{{breaker.amps}}</button>
+              class="breaker"
+              style.border-color="{{duinoConnected ? '#5bc0de' : '#d9534f'}}">{{breaker.amps}}</button>
     </div>
   </div>
 </div>

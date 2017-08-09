@@ -1,23 +1,41 @@
 <nav class="navbar navbar-inverse fixed-top">
-  <a class="navbar-brand" href="#">Breaker Sim</a>
-  <form class="navbar-form navbar-right" role="search">
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon">Pop Duration</div>
-        <select class="form-control" (change)="onDurationChange($event)">
-          <option value="{{selections.selectedDuration || 3}}">{{selections.selectedDuration || 3}}</option>
-          <option *ngFor="let num of [3,4,5,6,7,8,9,10]" value="{{num}}">{{num}}</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <div class="input-group-addon">Port</div>
-        <select class="form-control" (change)="onPortChange($event)" role="presentation">
-          <option value = '{{selections.selectedPort}}'>{{selections.selectedPort}}</option>
-          <option *ngFor="let port of ports" value="{{port.comName}}">{{port.comName}}</option>
-        </select>
-      </div>
-      <button class="btn btn-default navbar-btn" style="margin-right: 3em;">SET</button>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a id="breakerSim" class="navbar-brand" href="#" style.color="{{connected ? '#5bc0de' : '#d9534f'}}">Breaker Sim</a>
     </div>
-  </form>
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
+            <select class="form-control" (change)="onDurationChange($event)">
+              <option value="{{selections.selectedDuration || 3}}">{{selections.selectedDuration || 3}}</option>
+              <option *ngFor="let num of [3,4,5,6,7,8,9,10]" value="{{num}}">{{num}}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <div class="input-group-addon">Port</div>
+            <select class="form-control" (change)="onPortChange($event)" role="presentation">
+              <option value = '{{selections.selectedPort}}'>{{selections.selectedPort}}</option>
+              <option *ngFor="let port of ports" value="{{port.comName}}">{{port.comName}}</option>
+            </select>
+          </div>
+          <button class="btn navbar-btn" [ngClass]="{'btn-danger': !connected, 'btn-success': connected}"
+                  (click)="setPortClick()"
+                  style="margin-right: 10em; width: 7em;">{{connected ? "Connected" : "Connect"}}</button>
+        </div>
+      </form>
+    </div><!-- /.navbar-collapse -->
+
+  </div>
 </nav>
