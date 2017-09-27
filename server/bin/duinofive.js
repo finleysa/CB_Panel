@@ -11,7 +11,6 @@ exports.change = (data, cb) => {
 }
 
 exports.start = (port, cb) => {
-  try {
     let five = require("johnny-five");
     let board = new five.Board({
       port: port
@@ -49,12 +48,12 @@ exports.start = (port, cb) => {
       }); // end loop
     }); // board.on(ready)
 
-    board.on("exit", function (event) {
-      console.log("%s sent a 'fail' message: %s", event.class, event.message);
+    board.on("exit", function(e) {
+      console.log("%s sent a 'fail' message: %s", e.class, e.message);
     });
 
-  } catch (e) {
-    cb({connected: false});
-    console.error(e);
-  }
+    board.on("error", function(e) {
+      global.connectedToDuino = false;
+      console.error(e.message);
+    });
 }

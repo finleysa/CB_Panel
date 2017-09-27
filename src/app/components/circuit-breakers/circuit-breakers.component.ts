@@ -22,6 +22,7 @@ export class CircuitBreakersComponent {
   }
 
   popBreaker(e, address: string, register: string, breakerNumber: string) {
+    console.log(e);
     this.renderer.addClass(e.target, 'popped');
     this.disableButtons = true;
     this.breakerService.pop({
@@ -39,7 +40,6 @@ export class CircuitBreakersComponent {
     this.timer.max = this.popDuration;
     this.timer.min = 0;
     this.timer.now = this.popDuration;
-    console.log("POPDURATION", this.popDuration)
 
     let popTimer = setInterval(() => {
       if (this.timer.now <= 0) {

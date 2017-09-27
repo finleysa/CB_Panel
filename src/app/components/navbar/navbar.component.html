@@ -18,7 +18,7 @@
           <div class="input-group">
             <div class="input-group-addon"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></div>
             <select class="form-control" (change)="onDurationChange($event)">
-              <option value="{{selections.selectedDuration || 3}}">{{selections.selectedDuration || 3}}</option>
+              <option value="{{this.selections.selectedDuration || 3}}">{{this.selections.selectedDuration || 3}}</option>
               <option *ngFor="let num of [3,4,5,6,7,8,9,10]" value="{{num}}">{{num}}</option>
             </select>
           </div>
@@ -26,7 +26,7 @@
           <div class="input-group">
             <div class="input-group-addon">Port</div>
             <select class="form-control" (change)="onPortChange($event)" role="presentation">
-              <option value = '{{selections.selectedPort}}'>{{selections.selectedPort}}</option>
+              <option value = '{{savedPort}}'>{{savedPort}}</option>
               <option *ngFor="let port of ports" value="{{port.comName}}">{{port.comName}}</option>
             </select>
           </div>

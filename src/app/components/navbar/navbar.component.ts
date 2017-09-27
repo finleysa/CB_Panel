@@ -3,6 +3,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Selections} from '../../models/selections';
 import {BreakersService} from "../../services/breakers/breakers.service";
+import * as _ from 'lodash';
+import {Port} from "../../models/port";
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +15,10 @@ export class NavbarComponent implements OnInit {
   @Output() popDurationEvent = new EventEmitter();
   @Output() changePortEvent = new EventEmitter();
   @Output() duinoConnectedEvent = new EventEmitter();
+
+  savedPort: string;
   socket: any;
-  ports: any;
+  ports: Port[];
   selections = new Selections;
   connected: boolean = false;
 
@@ -24,7 +28,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     if(localStorage.getItem("port")) {
-      this.selections.selectedPort = localStorage.getItem("port");
+      this.savedPort = localStorage.getItem("port");
+      this.selections.selectedPort = this.savedPort;
     }
     if(localStorage.getItem("duration")) {
       this.selections.selectedDuration = parseInt(localStorage.getItem("duration"));
@@ -34,7 +39,12 @@ export class NavbarComponent implements OnInit {
 
     this.socket = io();
     this.socket.emit('GetSerialPorts');
-    this.socket.on('EmitPorts', (ports) => { this.ports = ports; });
+    this.socket.on('EmitPorts', (ports) => {
+      this.ports = ports;
+      _.remove(this.ports, (port)=> {
+        return port.comName == this.savedPort;
+      });
+    });
     this.socket.emit('GetDuinoStatus');
     this.socket.on('DuinoStatus', (connected) => { this.connected = connected.status; this.duinoConnectedEmit(); });
   }

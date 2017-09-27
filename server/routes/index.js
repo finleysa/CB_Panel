@@ -4,7 +4,7 @@ const duino = require('../bin/duinoFive');
 const RelayRequest = require('../models/relayRequest');
 global.connectedToDuino = false;
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.status(200).sendFile('/dist/index.html');
 });
 

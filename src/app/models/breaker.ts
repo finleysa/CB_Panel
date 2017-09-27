@@ -4,4 +4,5 @@ export class Breaker {
   address: string;
   register: string;
   relay: string;
+  popped?: boolean;
 }

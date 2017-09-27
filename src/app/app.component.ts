@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {BreakersService} from "./services/breakers/breakers.service";
 
 @Component({
   selector: 'app-root',
